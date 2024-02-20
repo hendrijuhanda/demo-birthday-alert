@@ -1,0 +1,23 @@
+name: demo-birthday-alert
+services:
+  nginx:
+    type: nginx
+    webroot: .output/public
+  node:
+    type: node:18
+    ports:
+      - 3000:3000
+  database:
+    type: mysql
+  pma:
+    type: phpmyadmin
+tooling:
+  npm:
+    service: node
+  node:
+    service: node
+proxy:
+  nginx:
+    - demo-birthday-alert.lndo.site
+  pma:
+    - demo-birthday-alert.pma.lndo.site
