@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { StoreUserDto } from './dto/store-user.dto';
 import { UserService } from './user.service';
+import { User } from './user.entity';
 
 @Controller('user')
 export class UserController {
@@ -17,12 +18,12 @@ export class UserController {
 
   @Post()
   @UsePipes(new ValidationPipe())
-  store(@Body() body: StoreUserDto): any {
+  store(@Body() body: StoreUserDto): Promise<User> {
     return this.userService.create(body);
   }
 
   @Delete(':id')
-  destroy(@Param('id', ParseIntPipe) id: number): any {
-    return `this is delete: ${id}`;
+  destroy(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return this.userService.delete(id);
   }
 }

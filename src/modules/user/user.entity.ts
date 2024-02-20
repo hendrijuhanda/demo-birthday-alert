@@ -1,14 +1,14 @@
 import {
   Entity,
   Column,
-  PrimaryColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity()
 export class User {
-  @PrimaryColumn('int')
+  @PrimaryGeneratedColumn('increment')
   id: number;
 
   @Column('varchar')
