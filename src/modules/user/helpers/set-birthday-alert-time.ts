@@ -11,10 +11,6 @@ export default (user: User) => {
   // User birtday time in its timezone
   const birthdayTime = `${user.date_of_birth}T${process.env.BIRTHDAY_ALERT_EXECUTION_TIME || '09:00:00'}${tzOffset}`;
 
-  console.log(birthdayTime);
-  console.log(moment());
-  console.log(moment(birthdayTime).utc());
-
   // Change its birthday time to UTC
   const tzDateTime = moment(birthdayTime).utc().toDate();
 

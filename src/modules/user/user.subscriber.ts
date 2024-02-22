@@ -21,6 +21,8 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
     dataSource.subscribers.push(this);
   }
 
+  private deletedId: number;
+
   listenTo() {
     return User;
   }
@@ -63,10 +65,12 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
     });
   }
 
-  afterRemove(event: RemoveEvent<User>): void | Promise<any> {
-    const removedUser = event.entity;
+  beforeRemove(event: RemoveEvent<User>): void | Promise<any> {
+    this.deletedId = event.entityId;
+  }
 
-    const jobName = `birthday-alert-${removedUser.id}`;
+  afterRemove(): void | Promise<any> {
+    const jobName = `birthday-alert-${this.deletedId}`;
 
     this.dynamicCronService.removeCronJob(jobName);
   }
