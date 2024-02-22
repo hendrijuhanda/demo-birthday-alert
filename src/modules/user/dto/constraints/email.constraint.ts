@@ -9,7 +9,7 @@ import { Injectable } from '@nestjs/common';
 
 @ValidatorConstraint({ name: 'email', async: true })
 @Injectable()
-export class EmailConstraint implements ValidatorConstraintInterface {
+export class IsEmailUnique implements ValidatorConstraintInterface {
   constructor(private readonly entityManager: EntityManager) {}
 
   async validate(value: string): Promise<boolean> {

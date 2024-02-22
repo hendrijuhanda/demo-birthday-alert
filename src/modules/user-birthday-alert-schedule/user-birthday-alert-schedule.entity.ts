@@ -37,7 +37,12 @@ export class UserBirthdayAlertSchedule {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne(() => User, (user: User) => user.schedules)
+  @Column('integer')
+  user_id: number;
+
+  @ManyToOne(() => User, (user: User) => user.schedules, {
+    createForeignKeyConstraints: false,
+  })
   @JoinColumn({ name: 'user_id' })
   user: User;
 }

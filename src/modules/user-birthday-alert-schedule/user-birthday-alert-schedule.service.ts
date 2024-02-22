@@ -7,6 +7,8 @@ import {
 import { Repository } from 'typeorm';
 import { CreateUserBirthdayAlertScheduleDto } from './dto/create-user-birthday-alert-schedule.dto';
 import { UpdateUserBirthdayAlertScheduleDto } from './dto/update-user-birthday-alert-schedule.dto copy';
+import { User } from '../user/user.entity';
+import setBirthdayAlertTime from 'src/utils/set-birthday-alert-time';
 
 @Injectable()
 export class UserBirthdayAlertScheduleService {
@@ -37,5 +39,31 @@ export class UserBirthdayAlertScheduleService {
     await this.userBirthdayAlertScheduleRepository.update(id, data);
 
     return this.userBirthdayAlertScheduleRepository.findOne({ where: { id } });
+  }
+
+  async abortByUserId(userId: number): Promise<void> {
+    const schedules = await this.userBirthdayAlertScheduleRepository.find({
+      where: {
+        user_id: userId,
+        status: UserBirthdayAlertScheduleStatus.PENDING,
+      },
+    });
+
+    for (const schedule of schedules) {
+      await this.userBirthdayAlertScheduleRepository.update(schedule.id, {
+        status: UserBirthdayAlertScheduleStatus.ABORTED,
+      });
+    }
+  }
+
+  async updateByUser(user: User): Promise<void> {
+    await this.abortByUserId(user.id);
+
+    const executionTime = setBirthdayAlertTime(user);
+
+    await this.create({
+      user,
+      execution_time: executionTime,
+    });
   }
 }

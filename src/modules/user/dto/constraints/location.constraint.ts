@@ -5,7 +5,7 @@ import {
 import findLocation from 'src/utils/find-location';
 
 @ValidatorConstraint({ name: 'location', async: true })
-export class LocationConstraint implements ValidatorConstraintInterface {
+export class IsLocationExist implements ValidatorConstraintInterface {
   errorType = null;
 
   async validate(value: string): Promise<boolean> {

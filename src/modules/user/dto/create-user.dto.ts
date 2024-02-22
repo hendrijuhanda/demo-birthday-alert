@@ -1,10 +1,10 @@
 import { IsDateString, IsNotEmpty, Validate } from 'class-validator';
-import { LocationConstraint } from './constraints/location.constraint';
-import { EmailConstraint } from './constraints/email.constraint';
+import { IsLocationExist } from './constraints/location.constraint';
+import { IsEmailUnique } from './constraints/email.constraint';
 
-export class StoreUserDto {
+export class CreateUserDto {
   @IsNotEmpty()
-  @Validate(EmailConstraint)
+  @Validate(IsEmailUnique)
   email: string;
 
   @IsNotEmpty()
@@ -15,6 +15,6 @@ export class StoreUserDto {
   date_of_birth: string;
 
   @IsNotEmpty()
-  @Validate(LocationConstraint)
+  @Validate(IsLocationExist)
   location: string;
 }
