@@ -11,7 +11,7 @@ import {
 import { StoreUserDto } from './dto/store-user.dto';
 import { UserService } from './user.service';
 import { User } from './user.entity';
-import findLocation from './dto/helpers/find-location';
+import findLocation from 'src/utils/find-location';
 
 @Controller('user')
 export class UserController {

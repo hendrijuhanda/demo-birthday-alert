@@ -34,7 +34,7 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
     const cronTime = setBirthdayAlertTime(insertedUser);
 
     const sendEmailRecursive = () => {
-      const fullName = `${insertedUser.first_name} ${insertedUser.last_name}`;
+      const fullName = insertedUser.name;
 
       this.httpService.axiosRef
         .post(

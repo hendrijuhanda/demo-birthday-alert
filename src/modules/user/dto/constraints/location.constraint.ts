@@ -2,14 +2,14 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-import findLocation from '../helpers/find-location';
+import findLocation from 'src/utils/find-location';
 
 @ValidatorConstraint({ name: 'location', async: true })
-export class Location implements ValidatorConstraintInterface {
+export class LocationConstraint implements ValidatorConstraintInterface {
   errorType = null;
 
-  async validate(text: string): Promise<boolean> {
-    const location = findLocation(text);
+  async validate(value: string): Promise<boolean> {
+    const location = findLocation(value);
 
     if (!location.length) {
       this.errorType = 'not-found';

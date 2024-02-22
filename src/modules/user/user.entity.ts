@@ -11,11 +11,11 @@ export class User {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column('varchar')
-  first_name: string;
+  @Column({ type: 'varchar', unique: true })
+  email: string;
 
   @Column('varchar')
-  last_name: string;
+  name: string;
 
   @Column('date')
   date_of_birth: string;
