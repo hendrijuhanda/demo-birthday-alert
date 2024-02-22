@@ -4,11 +4,18 @@ import { AppService } from './app.service';
 import { UserModule } from './modules/user/user.module';
 import { DatabaseModule } from './database/database.module';
 import { ScheduleModule } from '@nestjs/schedule';
-import { DynamicCronService } from './services/dynamic-cron.service';
+import { UserBirthdayAlertScheduleModule } from './modules/user-birthday-alert-schedule/user-birthday-alert-schedule.module';
+import { CronJobModule } from './modules/cron-job/cron-job.module';
 
 @Module({
-  imports: [DatabaseModule, UserModule, ScheduleModule.forRoot()],
+  imports: [
+    DatabaseModule,
+    ScheduleModule.forRoot(),
+    CronJobModule,
+    UserModule,
+    UserBirthdayAlertScheduleModule,
+  ],
   controllers: [AppController],
-  providers: [AppService, DynamicCronService],
+  providers: [AppService],
 })
 export class AppModule {}

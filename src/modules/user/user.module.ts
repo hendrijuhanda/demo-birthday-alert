@@ -4,13 +4,12 @@ import { UserService } from './user.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { UserSubscriber } from './user.subscriber';
-import { DynamicCronService } from 'src/services/dynamic-cron.service';
-import { HttpModule } from '@nestjs/axios';
 import { EmailConstraint } from './dto/constraints/email.constraint';
+import { UserBirthdayAlertScheduleModule } from '../user-birthday-alert-schedule/user-birthday-alert-schedule.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), HttpModule],
+  imports: [TypeOrmModule.forFeature([User]), UserBirthdayAlertScheduleModule],
   controllers: [UserController],
-  providers: [UserService, EmailConstraint, DynamicCronService, UserSubscriber],
+  providers: [UserService, EmailConstraint, UserSubscriber],
 })
 export class UserModule {}

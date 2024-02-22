@@ -4,7 +4,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryGeneratedColumn,
+  ManyToOne,
 } from 'typeorm';
+import { UserBirthdayAlertSchedule } from '../user-birthday-alert-schedule/user-birthday-alert-schedule.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -28,4 +30,10 @@ export class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @ManyToOne(
+    () => UserBirthdayAlertSchedule,
+    (birthdayAlertSchedule) => birthdayAlertSchedule.user,
+  )
+  birthdayAlertSchedules: UserBirthdayAlertSchedule[];
 }
