@@ -1,4 +1,5 @@
-import { IsArray, IsDateString, IsNotEmpty } from 'class-validator';
+import { IsDateString, IsNotEmpty, Validate } from 'class-validator';
+import { Location } from './constraints/location.constraint';
 
 export class StoreUserDto {
   @IsNotEmpty()
@@ -12,6 +13,6 @@ export class StoreUserDto {
   date_of_birth: string;
 
   @IsNotEmpty()
-  @IsArray()
+  @Validate(Location)
   location: string;
 }

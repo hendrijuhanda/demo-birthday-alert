@@ -11,6 +11,7 @@ import {
 import { StoreUserDto } from './dto/store-user.dto';
 import { UserService } from './user.service';
 import { User } from './user.entity';
+import findLocation from './dto/helpers/find-location';
 
 @Controller('user')
 export class UserController {
@@ -19,6 +20,8 @@ export class UserController {
   @Post()
   @UsePipes(new ValidationPipe())
   store(@Body() body: StoreUserDto): Promise<User> {
+    body.location = findLocation(body.location)[0];
+
     return this.userService.create(body);
   }
 
