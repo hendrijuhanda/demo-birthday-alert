@@ -25,7 +25,7 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
     const insertedUser = event.entity;
 
     this.userBirthdayAlertScheduleService.create({
-      user_id: insertedUser.id,
+      user: insertedUser,
       execution_time: setBirthdayAlertTime(insertedUser),
     });
   }

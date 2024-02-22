@@ -5,6 +5,7 @@ import {
   UpdateDateColumn,
   PrimaryGeneratedColumn,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { User } from '../user/user.entity';
 
@@ -19,12 +20,6 @@ export enum UserBirthdayAlertScheduleStatus {
 export class UserBirthdayAlertSchedule {
   @PrimaryGeneratedColumn('increment')
   id: number;
-
-  @ManyToOne(() => User, (user) => user.birthdayAlertSchedules)
-  user: User;
-
-  @Column('integer')
-  user_id: number;
 
   @Column('datetime')
   execution_time: string;
@@ -41,4 +36,8 @@ export class UserBirthdayAlertSchedule {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @ManyToOne(() => User, (user: User) => user.schedules)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }

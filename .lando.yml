@@ -12,6 +12,8 @@ services:
       - pm2 start dist/main.js
   database:
     type: mysql
+  redis:
+    type: redis
   pma:
     type: phpmyadmin
 tooling:
