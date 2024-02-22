@@ -5,9 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { UserSubscriber } from './user.subscriber';
 import { DynamicCronService } from 'src/services/dynamic-cron.service';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User]), HttpModule],
   controllers: [UserController],
   providers: [UserService, DynamicCronService, UserSubscriber],
 })

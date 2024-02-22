@@ -17,13 +17,15 @@ export class DynamicCronService {
   }
 
   removeCronJob(name: string) {
-    const job = this.schedulerRegistry.getCronJob(name);
+    try {
+      const job = this.schedulerRegistry.getCronJob(name);
 
-    if (job) {
-      job.stop();
+      if (job) {
+        job.stop();
 
-      this.schedulerRegistry.deleteCronJob(name);
-    }
+        this.schedulerRegistry.deleteCronJob(name);
+      }
+    } catch (_e) {}
   }
 
   getCrons() {
