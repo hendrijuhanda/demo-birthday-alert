@@ -1,12 +1,15 @@
 name: demo-birthday-alert
 services:
-  nginx:
-    type: nginx
-    webroot: .output/public
   node:
     type: node:18
     ports:
       - 3000:3000
+    run:
+      - npm install -g pm2
+      - npm install
+      - npm run build
+      - npm run schema:sync
+      - pm2 start dist/main.js
   database:
     type: mysql
   pma:
@@ -16,8 +19,10 @@ tooling:
     service: node
   node:
     service: node
+  pm2:
+    service: node
 proxy:
-  nginx:
-    - demo-birthday-alert.lndo.site
+  node:
+    - demo-birthday-alert.lndo.site:3000
   pma:
     - demo-birthday-alert.pma.lndo.site

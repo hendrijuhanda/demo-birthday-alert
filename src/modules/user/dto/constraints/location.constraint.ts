@@ -29,6 +29,6 @@ export class Location implements ValidatorConstraintInterface {
   defaultMessage(): string {
     if (this.errorType === 'not-found') return 'Location is not found!';
     if (this.errorType === 'multiple')
-      return "There are multiple location! Please provide it's state/province, eg 'springfield issouri'";
+      return "There are multiple location! Please provide it's state/province, eg 'springfield missouri'";
   }
 }
