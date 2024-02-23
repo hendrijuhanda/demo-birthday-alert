@@ -11,7 +11,7 @@ export class CronJobService {
     private readonly userBirthdayAlertProducer: UserBirthdayAlertProducer,
   ) {}
 
-  @Cron(CronExpression.EVERY_5_SECONDS)
+  @Cron(CronExpression.EVERY_HOUR)
   async handlePendingSchedules() {
     const schedules =
       await this.userBirthdayAlertSchduleService.getPendingSchedules();
