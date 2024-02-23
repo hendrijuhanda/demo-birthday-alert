@@ -16,6 +16,18 @@ services:
     type: redis
   pma:
     type: phpmyadmin
+  swagger:
+    type: nginx
+    webroot: swagger/swagger-ui-5.11.7/dist
+    build_as_root:
+      - apt-get update -y && apt-get install unzip wget -y
+      - rm -rf swagger
+      - mkdir swagger
+      - wget https://github.com/swagger-api/swagger-ui/archive/refs/tags/v5.11.7.zip
+      - unzip v5.11.7.zip 'swagger-ui-5.11.7/dist/*' -d swagger
+      - rm v5.11.7.zip
+      - cp demo-birthday-alert.openapi.json swagger/swagger-ui-5.11.7/dist
+      - sed -i 's,https://petstore.swagger.io/v2/swagger.json,http://demo-birthday-alert.swagger.lndo.site/demo-birthday-alert.openapi.json,g' swagger/swagger-ui-5.11.7/dist/swagger-initializer.js
 tooling:
   npm:
     service: node
@@ -28,3 +40,5 @@ proxy:
     - demo-birthday-alert.lndo.site:3000
   pma:
     - demo-birthday-alert.pma.lndo.site
+  swagger:
+    - demo-birthday-alert.swagger.lndo.site

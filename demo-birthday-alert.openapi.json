@@ -11,16 +11,14 @@
     }
   ],
   "paths": {
-    "/user": {
+    "/v1/user": {
       "post": {
         "summary": "Store",
         "x-apidog-folder": "User",
         "x-apidog-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "parameters": [],
         "requestBody": {
           "content": {
@@ -32,10 +30,10 @@
                 "x-apidog-orders": []
               },
               "example": {
-                "first_name": "Hendri",
-                "last_name": "Juhanda",
-                "date_of_birth": "1988-02-23",
-                "location": "Cirebon"
+                "email": "jhonny.cage@email.io",
+                "name": "Jhonny Cage",
+                "date_of_birth": "1999-02-22",
+                "location": "Swansea"
               }
             }
           }
@@ -59,16 +57,14 @@
         "security": []
       }
     },
-    "/user/{id}": {
+    "/v1/user/{id}": {
       "delete": {
         "summary": "Delete",
         "x-apidog-folder": "User",
         "x-apidog-status": "developing",
         "deprecated": false,
         "description": "",
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "parameters": [
           {
             "name": "id",
@@ -98,6 +94,58 @@
         },
         "x-run-in-apidog": "https://apidog.com/web/project/465993/apis/api-5676914-run",
         "security": []
+      },
+      "put": {
+        "summary": "Update",
+        "x-apidog-folder": "User",
+        "x-apidog-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": ["User"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {},
+                "x-apidog-ignore-properties": [],
+                "x-apidog-orders": []
+              },
+              "example": {
+                "location": "Jayapura"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apidog-ignore-properties": [],
+                  "x-apidog-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apidog": "https://apidog.com/web/project/465993/apis/api-5717676-run",
+        "security": []
       }
     }
   },
@@ -107,7 +155,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000",
+      "url": "http://demo-birthday-alert.lndo.site/api",
       "description": "demo-birthday-alert"
     }
   ]
