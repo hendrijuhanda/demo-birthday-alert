@@ -10,7 +10,7 @@ services:
       - cp .env.example .env
       - npm run build
       - npm run schema:sync
-      - pm2 start dist/main.js
+      - pm2 start dist/src/main.js
   database:
     type: mysql
   redis:
