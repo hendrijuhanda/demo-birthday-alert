@@ -17,7 +17,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:e2e": "jest --detectOpenHandles --config ./test/jest-e2e.json",
     "schema:sync": "typeorm-ts-node-commonjs schema:sync -d ./src/database/database.config.ts",
     "schema:log": "typeorm-ts-node-commonjs schema:log -d ./src/database/database.config.ts",
     "schema:drop": "typeorm-ts-node-commonjs schema:drop -d ./src/database/database.config.ts"
@@ -81,6 +81,10 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleDirectories": [
+      "<rootDir>/../",
+      "node_modules"
+    ]
   }
 }

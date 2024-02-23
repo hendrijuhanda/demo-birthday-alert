@@ -7,6 +7,7 @@ services:
     run:
       - npm install -g pm2
       - npm install
+      - cp .env.example .env
       - npm run build
       - npm run schema:sync
       - pm2 start dist/main.js
