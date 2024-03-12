@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Cron, CronExpression } from '@nestjs/schedule';
+import { Cron } from '@nestjs/schedule';
 import { UserBirthdayAlertScheduleService } from 'src/modules/user-birthday-alert-schedule/user-birthday-alert-schedule.service';
 import { UserBirthdayAlertProducer } from '../user-birthday-alert-schedule/user-birthday-alert-schedule.queue';
 import * as moment from 'moment';
@@ -11,7 +11,7 @@ export class CronJobService {
     private readonly userBirthdayAlertProducer: UserBirthdayAlertProducer,
   ) {}
 
-  @Cron(CronExpression.EVERY_HOUR)
+  @Cron('*/15 * * * *')
   async handlePendingSchedules() {
     const schedules =
       await this.userBirthdayAlertSchduleService.getPendingSchedules();
@@ -19,7 +19,8 @@ export class CronJobService {
     schedules.forEach((schedule) => {
       if (
         moment().isSame(moment(schedule.execution_time), 'date') &&
-        moment().isSame(moment(schedule.execution_time), 'hour')
+        moment().isSame(moment(schedule.execution_time), 'hour') &&
+        moment().isSame(moment(schedule.execution_time), 'minutes')
       ) {
         this.userBirthdayAlertProducer.sendQueue(schedule);
       }
