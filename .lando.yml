@@ -4,13 +4,14 @@ services:
     type: node:18
     ports:
       - 3000:3000
-    run:
+    build:
       - npm install -g pm2
+    run:
       - npm install
       - cp .env.example .env
       - npm run build
       - npm run schema:sync
-      - pm2 start dist/src/main.js
+      - pm2 start npm --name "nestjs" -- run start:prod
   database:
     type: mysql
   redis:
@@ -18,17 +19,18 @@ services:
   pma:
     type: phpmyadmin
   swagger:
-    type: nginx
-    webroot: swagger/swagger-ui-5.11.7/dist
-    build_as_root:
-      - apt-get update -y && apt-get install unzip wget -y
-      - rm -rf swagger
-      - mkdir swagger
-      - wget https://github.com/swagger-api/swagger-ui/archive/refs/tags/v5.11.7.zip
-      - unzip v5.11.7.zip 'swagger-ui-5.11.7/dist/*' -d swagger
-      - rm v5.11.7.zip
-      - cp demo-birthday-alert.openapi.json swagger/swagger-ui-5.11.7/dist
-      - sed -i 's,https://petstore.swagger.io/v2/swagger.json,http://demo-birthday-alert.swagger.lndo.site/demo-birthday-alert.openapi.json,g' swagger/swagger-ui-5.11.7/dist/swagger-initializer.js
+    type: lando
+    moreHttpPorts:
+      - 8080
+    services:
+      image: swaggerapi/swagger-ui
+      command: /docker-entrypoint.sh nginx -g "daemon off;"
+      ports:
+        - 8080
+      volumes:
+        - ./demo-birthday-alert.openapi.json:/usr/share/nginx/html/openapi.json
+      environment:
+        SWAGGER_JSON_URL: /openapi.json
 tooling:
   npm:
     service: node
@@ -40,6 +42,6 @@ proxy:
   node:
     - demo-birthday-alert.lndo.site:3000
   pma:
-    - demo-birthday-alert.pma.lndo.site
+    - pma.demo-birthday-alert.lndo.site
   swagger:
-    - demo-birthday-alert.swagger.lndo.site
+    - swagger.demo-birthday-alert.lndo.site:8080
